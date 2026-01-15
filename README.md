@@ -26,3 +26,22 @@ A minimal chatbot platform that allows users to create and manage AI-powered cha
 
 ## Project Structure
 
+backend/
+├── main.py
+├── database.py
+├── auth/
+│ ├── routes.py
+│ └── jwt.py
+├── users/
+│ ├── models.py
+│ └── routes.py
+├── projects/
+│ ├── models.py
+│ └── routes.py
+├── chat/
+│ └── routes.py
+└── requirements.txt
+
+frontend/
+├── src/
+└── package.json
