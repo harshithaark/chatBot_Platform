@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from database import Base
+from backend.database import Base
+
 
 class Prompt(Base):
     __tablename__ = "prompts"
