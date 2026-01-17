@@ -10,8 +10,8 @@ const getAPIBase = () => {
   if (hostname === 'localhost' || hostname === '127.0.0.1') {
     return `http://${hostname}:8000`;
   } else {
-    // For GitHub Codespace - replace port 5500 with 8000
-    return `https://${hostname.replace('-5500', '-8000')}`;
+    // For deployed environments, use the same origin
+    return window.location.origin;
   }
 };
 
