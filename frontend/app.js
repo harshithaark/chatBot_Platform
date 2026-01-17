@@ -1,4 +1,7 @@
-const API_BASE = "https://legendary-carnival-wrr7prjx46x2gvx4-8000.app.github.dev";
+// Dynamic API URL - works for both local and deployed environments
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? `http://${window.location.hostname}:8000`
+  : `${window.location.protocol}//${window.location.hostname}:8000`;
 
 let token = localStorage.getItem("token");
 let selectedProjectId = null;

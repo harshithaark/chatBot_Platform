@@ -5,7 +5,7 @@ from backend.database import SessionLocal
 from backend.projects.models import Project
 from backend.chat.models import Prompt
 from backend.chat.chat_schemas import ChatRequest
-from backend.auth.deps import get_current_user
+from backend.auth.jwt import get_current_user
 
 router = APIRouter(prefix="/projects/{project_id}/chat", tags=["Chat"])
 

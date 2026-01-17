@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from backend.database import SessionLocal
 from backend.projects.models import Project
+from backend.projects.schemas import ProjectCreate
 from backend.users.models import User
 from backend.auth.jwt import get_current_user
 
@@ -29,12 +30,13 @@ def list_projects(
 # ---------------- CREATE PROJECT ----------------
 @router.post("/")
 def create_project(
-    data: dict,
+    data: ProjectCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_user)
 ):
     project = Project(
-        name=data["name"],
+        name=data.name,
+        description=data.description,
         user_id=current_user.id
     )
     db.add(project)
