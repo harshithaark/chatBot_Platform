@@ -46,7 +46,7 @@ if os.path.exists(static_path):
 # Serve index.html at root
 @app.get("/")
 async def root():
-    index_path = os.path.join(os.path.dirname(__file__), "..", "index.html")
+    index_path = os.path.join(os.path.dirname(__file__), "..", "static/index.html")
     if os.path.exists(index_path):
         return FileResponse(index_path, media_type="text/html")
     return {"message": "ChatBot Platform API running"}
