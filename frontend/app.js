@@ -50,7 +50,7 @@ async function login() {
 
     const data = await res.json();
     localStorage.setItem("token", data.access_token);
-    window.location.href = "frontend/dashboard.html";
+    window.location.href = "/static/dashboard.html";
   } catch (error) {
     console.error("Login error:", error);
     document.getElementById("authMessage").innerText = "Error connecting to server: " + error.message;

@@ -38,7 +38,7 @@ app.include_router(auth_router)
 app.include_router(project_router)
 app.include_router(chat_router)
 
-# Serve static frontend files
+# Serve static frontend files (CSS, JS, HTML)
 frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
 if os.path.exists(frontend_path):
     app.mount("/static", StaticFiles(directory=frontend_path), name="static")
@@ -48,5 +48,5 @@ if os.path.exists(frontend_path):
 async def root():
     index_path = os.path.join(os.path.dirname(__file__), "..", "index.html")
     if os.path.exists(index_path):
-        return FileResponse(index_path)
+        return FileResponse(index_path, media_type="text/html")
     return {"message": "ChatBot Platform API running"}
