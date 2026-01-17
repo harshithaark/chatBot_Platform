@@ -1,47 +1,74 @@
 # Chatbot Platform
 
-A minimal chatbot platform that allows users to create and manage AI-powered chatbot agents with custom prompts and real-time chat using a Large Language Model (LLM) API.
+A minimal chatbot platform that allows users to create and manage AI-powered chatbot agents with custom prompts and chat functionality.
 
 ---
 
 ## Features
 
-- User registration and login with JWT authentication
+- User registration and login using JWT authentication
 - Project/agent creation per user
-- Prompt management per project
-- Real-time chat with LLM integration
-- Secure and scalable backend design
+- Prompt storage per project
+- Chat interface per project (LLM-ready)
+- Secure user-based data isolation
 
 ---
 
 ## Tech Stack
 
-- Backend: FastAPI
-- Authentication: JWT
-- Database: SQLite / PostgreSQL
-- LLM API: OpenAI / OpenRouter
-- Frontend: React
+### Backend
+- FastAPI
+- SQLAlchemy
+- JWT (python-jose)
+- SQLite (can be replaced with PostgreSQL)
+
+### Frontend
+- HTML
+- CSS
+- Vanilla JavaScript
 
 ---
 
 ## Project Structure
 
-backend/
-├── main.py
-├── database.py
-├── auth/
-│ ├── routes.py
-│ └── jwt.py
-├── users/
-│ ├── models.py
-│ └── routes.py
-├── projects/
-│ ├── models.py
-│ └── routes.py
-├── chat/
-│ └── routes.py
-└── requirements.txt
+chatBot_Platform/
+├── backend/
+│ ├── main.py
+│ ├── database.py
+│ ├── auth/
+│ │ ├── routes.py
+│ │ ├── jwt.py
+│ │ └── dependencies.py
+│ ├── users/
+│ │ └── models.py
+│ ├── projects/
+│ │ ├── models.py
+│ │ ├── routes.py
+│ │ └── schemas.py
+│ ├── chat/
+│ │ ├── models.py
+│ │ ├── schemas.py
+│ │ └── chat_routes.py
+│ └── chatbot.db
+│
+├── frontend/
+│ ├── register.html
+│ ├── dashboard.html
+│ ├── app.js
+│ └── style.css
+|--- index.html
+├── requirements.txt
+└── README.md
 
-frontend/
-├── src/
-└── package.json
+
+---
+
+## How to Run Locally
+
+### Backend
+```bash
+pip install -r requirements.txt
+uvicorn backend.main:app --reload
+
+cd frontend
+python3 -m http.server 5500

@@ -21,7 +21,7 @@ async function login() {
 
   const data = await res.json();
   localStorage.setItem("token", data.access_token);
-  window.location.href = "dashboard.html";
+  window.location.href = "frontend/dashboard.html";
 }
 
 async function register() {
