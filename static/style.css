@@ -1,0 +1,155 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CARD */
+.card {
+  background: white;
+  width: 420px;
+  max-width: 90%;
+  padding: 24px;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 15px;
+  height: 38px;
+}
+
+/* BUTTONS */
+button {
+  padding: 6px 18px;        /* ↓ height, ↑ width */
+  border: none;
+  border-radius: 8px;
+  background: #667eea;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  min-width: 90px;          /* makes buttons broader */
+  height: 38px;             /* controls height precisely */
+  transition: all 0.3s ease;
+}
+
+
+button:hover {
+  background: #5568d9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* DELETE BUTTON */
+.delete-btn {
+  background: #dc3545;
+  padding: 8px 12px;
+  font-size: 12px;
+  margin-left: auto;
+  flex-shrink: 0;
+  border-radius: 8px;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+}
+
+/* SEND BUTTON */
+
+button[onclick="sendMessage()"] {
+  min-width: 70px;
+  height: 38px;
+  padding: 5px 14px;
+}
+
+
+/* ROW */
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.row input {
+  flex: 1;
+}
+
+/* PROJECT LIST */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 15px;
+}
+
+.project-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  width: 100%;
+  gap: 10px;
+}
+
+.project-item span {
+  flex: 1;
+  text-align: left;
+}
+
+/* CIRCLE */
+.project-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: white;
+  border: 2px solid #667eea;
+  flex-shrink: 0;
+  flex-grow: 0;
+  flex: 0 0 auto !important;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.project-dot.active {
+  background: #667eea;
+  border-color: #667eea;
+}
+
+
+/* CHAT */
+.chat {
+  margin-top: 15px;
+  padding: 10px;
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+/* LINKS */
+a {
+  color: #667eea;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="card">
+  <h3 id="currentProject">No project selected</h3>
+
+  <div class="row">
+    <input id="projectName" placeholder="New project name">
+    <button onclick="createProject()">Create</button>
+  </div>
+
+  <ul id="projects"></ul>
+
+  <div id="chat" class="chat"></div>
+
+  <div class="row">
+    <input id="message" placeholder="Type a message">
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script src="/static/app.js"></script>
+<script>loadProjects()</script>
+</body>
+</html>

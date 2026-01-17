@@ -39,9 +39,9 @@ app.include_router(project_router)
 app.include_router(chat_router)
 
 # Serve static frontend files (CSS, JS, HTML)
-frontend_path = os.path.join(os.path.dirname(__file__), "..", "frontend")
-if os.path.exists(frontend_path):
-    app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+static_path = os.path.join(os.path.dirname(__file__), "..", "static")
+if os.path.exists(static_path):
+    app.mount("/static", StaticFiles(directory=static_path), name="static")
 
 # Serve index.html at root
 @app.get("/")
