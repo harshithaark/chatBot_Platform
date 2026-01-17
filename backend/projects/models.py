@@ -1,8 +1,14 @@
+"""
+Project Model
+Database schema for chatbot projects/agents
+"""
+
 from sqlalchemy import Column, Integer, String, ForeignKey
 from backend.database import Base
 
 
 class Project(Base):
+    """Project model linked to a user"""
     __tablename__ = "projects"
 
     id = Column(Integer, primary_key=True, index=True)

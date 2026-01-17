@@ -1,32 +1,63 @@
-// Dynamic API URL - works for both local and deployed environments
-const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-  ? `http://${window.location.hostname}:8000`
-  : `${window.location.protocol}//${window.location.hostname}:8000`;
+/**
+ * ChatBot Platform Frontend
+ * Manages authentication, project operations, and chat interface
+ */
+
+// Determine API base URL based on environment (local or deployed)
+const getAPIBase = () => {
+  const hostname = window.location.hostname;
+  
+  if (hostname === 'localhost' || hostname === '127.0.0.1') {
+    return `http://${hostname}:8000`;
+  } else {
+    // For GitHub Codespace - replace port 5500 with 8000
+    return `https://${hostname.replace('-5500', '-8000')}`;
+  }
+};
+
+const API_BASE = getAPIBase();
+console.log("Connected to API:", API_BASE);
 
 let token = localStorage.getItem("token");
 let selectedProjectId = null;
 
-// ---------------- AUTH ----------------
+/**
+ * USER AUTHENTICATION
+ */
+
+// Login user with email and password
 async function login() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
-  const res = await fetch(`${API_BASE}/login`, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({ username: email, password })
-  });
-
-  if (!res.ok) {
-    document.getElementById("authMessage").innerText = "Login failed";
+  if (!email || !password) {
+    document.getElementById("authMessage").innerText = "Please fill in all fields";
     return;
   }
 
-  const data = await res.json();
-  localStorage.setItem("token", data.access_token);
-  window.location.href = "frontend/dashboard.html";
+  try {
+    const res = await fetch(`${API_BASE}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ username: email, password })
+    });
+
+    if (!res.ok) {
+      const error = await res.json();
+      document.getElementById("authMessage").innerText = error.detail || "Login failed";
+      return;
+    }
+
+    const data = await res.json();
+    localStorage.setItem("token", data.access_token);
+    window.location.href = "frontend/dashboard.html";
+  } catch (error) {
+    console.error("Login error:", error);
+    document.getElementById("authMessage").innerText = "Error connecting to server: " + error.message;
+  }
 }
 
+// Register new user account
 async function register() {
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -46,7 +77,11 @@ async function register() {
     "Registered successfully. Please login.";
 }
 
-// ---------------- PROJECTS ----------------
+/**
+ * PROJECT MANAGEMENT
+ */
+
+// Load all projects for current user
 async function loadProjects() {
   const res = await fetch(`${API_BASE}/projects/`, {
     headers: {
@@ -56,6 +91,7 @@ async function loadProjects() {
 
   const projects = await res.json();
   const list = document.getElementById("projects");
+
   list.innerHTML = "";
 
   projects.forEach(p => {
@@ -66,8 +102,19 @@ async function loadProjects() {
     dot.className = "project-dot";
 
     const name = document.createElement("span");
+    name.className = "project-name";
     name.innerText = p.name;
-    name.onclick = () => {
+
+    const del = document.createElement("button");
+    del.textContent = "Delete";
+    del.className = "delete-btn";
+    del.onclick = (e) => {
+      e.stopPropagation();
+      deleteProject(p.id);
+    };
+
+    // Make entire list item clickable for selection (except delete button)
+    li.onclick = () => {
       selectedProjectId = p.id;
       document.getElementById("currentProject").innerText =
         `Selected project: ${p.name}`;
@@ -75,13 +122,6 @@ async function loadProjects() {
       document.querySelectorAll(".project-dot")
         .forEach(d => d.classList.remove("active"));
       dot.classList.add("active");
-    };
-
-    const del = document.createElement("button");
-    del.innerText = "🗑";
-    del.onclick = (e) => {
-      e.stopPropagation();
-      deleteProject(p.id);
     };
 
     li.appendChild(dot);

@@ -1,8 +1,14 @@
+"""
+ChatBot Platform Backend
+FastAPI application with JWT authentication and project management
+"""
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="Chatbot Platform")
+app = FastAPI(title="Chatbot Platform", version="1.0.0")
 
+# Enable CORS for frontend communication
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -11,7 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ⬇️ IMPORTS ONLY AFTER CORS
+# Import models and routers after middleware setup
 from backend.database import engine, Base
 from backend.users.models import User
 from backend.projects.models import Project
@@ -21,8 +27,10 @@ from backend.auth.routes import router as auth_router
 from backend.projects.routes import router as project_router
 from backend.chat.chat_routes import router as chat_router
 
+# Create all database tables
 Base.metadata.create_all(bind=engine)
 
+# Include routers
 app.include_router(auth_router)
 app.include_router(project_router)
 app.include_router(chat_router)

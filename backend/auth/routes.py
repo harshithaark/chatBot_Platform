@@ -1,3 +1,8 @@
+"""
+Authentication Routes
+User registration and login endpoints with JWT token generation
+"""
+
 from fastapi import APIRouter, Depends, HTTPException, Form
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -12,6 +17,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
 def get_db():
+    """Get database session"""
     db = SessionLocal()
     try:
         yield db
@@ -19,15 +25,18 @@ def get_db():
         db.close()
 
 
-def hash_password(password: str):
+def hash_password(password: str) -> str:
+    """Hash password using bcrypt"""
     return pwd_context.hash(password)
 
 
-def verify_password(password: str, hashed_password: str):
+def verify_password(password: str, hashed_password: str) -> bool:
+    """Verify password against hash"""
     return pwd_context.verify(password, hashed_password)
 
 
 def authenticate_user(db: Session, email: str, password: str):
+    """Authenticate user by email and password"""
     user = db.query(User).filter(User.email == email).first()
     if not user:
         return None
@@ -42,6 +51,7 @@ def register(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
+    """Register a new user with email and password"""
     if len(password) > 72:
         raise HTTPException(status_code=400, detail="Password too long")
 
